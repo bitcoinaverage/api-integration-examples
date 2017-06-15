@@ -5,8 +5,7 @@ $publicKey = 'enter your public key';
 $timestamp = time();
 $payload = $timestamp . '.' . $publicKey;
 $hash = hash_hmac('sha256', $payload, $secretKey, true);
-$keys = unpack('H*', $hash);
-$hexHash = array_shift($keys);
+$hexHash = array_shift(unpack('H*', $hash));
 $signature = $payload . '.' . $hexHash;
 
 $tickerUrl = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD"; // request URL
