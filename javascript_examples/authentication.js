@@ -18,7 +18,7 @@ var request = require('request');
 var options = {
     url: ticker_btcusd_url,
     headers: {
-        'X-Signature': signature
+        'X-session-id': signature
     }
 };
 function callback(error, response, body) {
