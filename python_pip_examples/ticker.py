@@ -5,7 +5,7 @@ if __name__ == '__main__':
     secret_key = '' or input('Enter your secret key: ')
     public_key = '' or input('Enter your public key: ')
 
-    restful_client = RestfulClient(secret_key, public_key)
+    restful_client = RestfulClient(public_key, secret_key)
 
     ticker_all_local = restful_client.ticker_all_local(crypto='LTC', fiat='GBP')
     print('ticker all local')
