@@ -9,6 +9,9 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/pkg/errors"
+	"github.com/spf13/viper"
 )
 
 const (
@@ -16,8 +19,22 @@ const (
 )
 
 func main() {
-	publicKey := "ENTER_PUBLIC_KEY_HERE"
-	secretKey := "ENTER_SECRET_KEY_HERE"
+	viper.AddConfigPath(".")    // optionally look for config in the working directory
+	err := viper.ReadInConfig() // Find and read the config file
+	if err != nil {             // Handle errors reading the config file
+		panic(errors.Wrap(err, "config file error"))
+	}
+	p := viper.Get("publickey")
+	if p == nil {
+		panic("missing publickey")
+	}
+	publicKey := p.(string)
+
+	s := viper.Get("secretkey")
+	if s == nil {
+		panic("missing secretkey")
+	}
+	secretKey := []byte(s.(string))
 
 	// get timestamp
 	t := time.Now()
