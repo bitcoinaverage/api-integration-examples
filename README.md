@@ -24,7 +24,7 @@ var websocketClient = ba.websocketClient(publicKey, secretKey);
 
 #### Ticker data
 
-```
+```javascript
 restClient.tickerGlobalPerSymbol("BTCUSD", function(response){
 	console.log(response);
 });
@@ -32,7 +32,7 @@ restClient.tickerGlobalPerSymbol("BTCUSD", function(response){
 [Full response format in our docs](https://apiv2.bitcoinaverage.com/#ticker-data-per-symbol)
 
 #### Exchange data
-```
+```javascript
 restClient.allExchangeDataForSymbol('BTCUSD', function(response) {
     console.log(response);
 });
@@ -51,19 +51,19 @@ pip install bitcoinaverage
 ```
 
 #### Setup
-```
+```python
 from bitcoinaverage import RestfulClient
 restful_client = RestfulClient("<secret key>", "<public key>")
 ```
 
 #### Ticker data
-```
+```python
 ticker_global = restful_client.ticker_all_global(crypto="ETH", fiat="USD,EUR")
 print(ticker_global)
 ```
 
 #### Exchange data
-```
+```python
 all_bitstamp_data = restful_client.per_exchange_data('bitstamp')
 all_coinbase_data = restful_client.per_exchange_data('gdax')
 
