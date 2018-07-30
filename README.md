@@ -103,7 +103,7 @@ var ORDERBOOKS = {
     ETHUSD: {}
 };
 var symbol = '';
-ws.connectToOrderbookWebsocket(exchange, symbols, function(response){
+wsClient.connectToOrderbookWebsocket(exchange, symbols, function(response){
     symbol = respnose.data.symbol;
     if(response.data.type === "snapshot"){
         ORDERBOOKS[symbol].asks = response.data.asks;
