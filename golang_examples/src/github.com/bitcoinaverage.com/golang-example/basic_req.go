@@ -30,35 +30,13 @@ func main() {
 	}
 	publicKey := p.(string)
 
-	s := viper.Get("secretkey")
-	if s == nil {
-		panic("missing secretkey")
-	}
-	secretKey := []byte(s.(string))
-
-	// get timestamp
-	t := time.Now()
-	ts := int(t.Unix())
-	timestamp := strconv.Itoa(ts)
-
-	payload := timestamp + "." + publicKey
-
-	// prepare the hmac with sha256
-	hash := hmac.New(sha256.New, []byte(secretKey))
-	hash.Write([]byte(payload))
-	// hex representation
-	hexValue := hex.EncodeToString(hash.Sum(nil))
-
-	// defining signature
-	signature := payload + "." + hexValue
-
 	uriPath := "/indices/global/ticker/BTCUSD"
 
 	// make request
 	req, _ := http.NewRequest("GET", baseURL+uriPath, nil)
 
 	// add needed header
-	req.Header.Add("X-signature", signature)
+	req.Header.Add("x-ba-key", publicKey)
 
 	// read response
 	res, _ := http.DefaultClient.Do(req)
