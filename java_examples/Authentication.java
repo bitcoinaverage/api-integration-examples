@@ -21,30 +21,16 @@ import com.google.gson.JsonParser;
 
 public class Authentication {
 
-	static String getSignature(String secretKey, String publicKey) throws NoSuchAlgorithmException, InvalidKeyException {
-
-		long timestamp = System.currentTimeMillis() / 1000L;
-		String payload = timestamp + "." + publicKey;
-		
-		Mac sha256_Mac = Mac.getInstance("HmacSHA256");
-		SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
-		sha256_Mac.init(secretKeySpec);
-		String hashHex = DatatypeConverter.printHexBinary(sha256_Mac.doFinal(payload.getBytes())).toLowerCase();
-		String signature = payload + "." + hashHex;
-		return signature;
-	}
-	
 	public static void main(String[] args) throws IOException,
 			NoSuchAlgorithmException, InvalidKeyException {
 		String secretKey = "enter your secret key";
 		String publicKey = "enter your public key";
-		String signature = getSignature(secretKey, publicKey);
-		
+
 		String url = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD";
 		URL urlObj = new URL(url);
 		HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
 		connection.setRequestMethod("GET");
-		connection.setRequestProperty("X-Signature", signature);
+		connection.setRequestProperty("x-ba-key", publicKey);
 
 		// read all the lines of the response into response StringBuffer
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
