@@ -32,6 +32,7 @@ namespace InvestAgg.Server.BitcoinAverage
         }
 
         public string GetHeaderSignature()
+//        deprecated method, no need for this signature anymore
         {
             var timestamp = (int)((DateTime.UtcNow - _epochUtc).TotalSeconds);
             var payload = timestamp + "." + _publicKey;
@@ -44,7 +45,7 @@ namespace InvestAgg.Server.BitcoinAverage
         {
             using (var httpClient = new HttpClient())
             {
-                httpClient.DefaultRequestHeaders.Add("X-signature", GetHeaderSignature());
+                httpClient.DefaultRequestHeaders.Add("x-ba-key", _publicKey);
                 return JToken.Parse(await httpClient.GetStringAsync(url));
             }
         }
